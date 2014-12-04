@@ -1,0 +1,32 @@
+Tutorial:
+- https://netbeans.org/kb/docs/php/wish-list-lesson1.html
+- http://coreymaynard.com/blog/creating-a-restful-api-with-php/
+- http://coenraets.org/blog/2011/12/restful-services-with-jquery-php-and-the-slim-framework/
+http://www.sanwebe.com/2013/06/creating-simple-shopping-cart-with-php/comment-page-1
+
+Task List:
+- Registrations
+- Ordering (one or more books)
+- User record
+	- account info
+	- history of orders(book name, number of copies, date)
+	- history of feedbacks
+	- list of feedbacks he/she ranked
+- New book for store manager
+- Arrival of more copies for store manager
+- Feedback recordings for book (date, numerical socre, short text)
+	- could not change
+	- on feedback per user per book is allowed
+- Usefulness ratings for feedback
+	- user can not rate on own feedback
+- Book Browing
+	- search by name, authors, published, title, subject
+	- result sort
+- Useful feedbacks
+	- top n most useful feedbacks
+- Book recommendation:
+	- according to sale history
+- Statistic for every month:
+	- list of popular books
+	- list of authors
+	- list of popular pyblishers
