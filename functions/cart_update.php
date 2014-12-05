@@ -1,6 +1,6 @@
 <?php 
+include_once '../require/config.php';
 session_start();
-include_once("db.php");
 
 if (!isset($_SESSION["books"])) {
 	$_SESSION["books"] = array();
@@ -8,11 +8,13 @@ if (!isset($_SESSION["books"])) {
 
 // Empty cart by distroyng current session
 if (isset($_GET["emptycart"]) && $_GET["emptycart"] == 1) {
-	$return_url = base64_decode($GET["return_url"]);
-	session_destroy();
+	$return_url = base64_decode($_GET["return_url"]);
+	// session_destroy();
+	unset($_SESSION["books"]);
 	header('Location:'.$return_url);
 }
 
+// Add new item to cart
 if (isset($_POST['type']) && $_POST["type"] == 'add') {
 
 	// Get all the post info
@@ -55,6 +57,7 @@ if (isset($_POST['type']) && $_POST["type"] == 'add') {
 	header('Location:'.$return_url);
 }
 
+// Remove an item from the cart
 if (isset($_GET["removep"]) && isset($_GET["return_url"]) && isset($_SESSION["books"])) {
 	$ISBN = $_GET["removep"];
 	$return_url = base64_decode($_GET["return_url"]);
@@ -67,6 +70,42 @@ if (isset($_GET["removep"]) && isset($_GET["return_url"]) && isset($_SESSION["bo
 
 		$_SESSION["books"] = $product;
 	}
+
+	header('Location:'.$return_url);
+}
+
+
+// Checking out
+if (isset($_GET["checkout"]) && $_GET["checkout"] ==1 ) {
+	$return_url = base64_decode($_GET["return_url"]);
+	
+	foreach ($_SESSION["books"] as $cart_itm) {
+		// excute database update sql
+		// Insert this into order table
+		$ISBN = $cart_itm['ISBN'];
+		$username = $_SESSION['username'];
+		$qty = $cart_itm['qty'];
+		$order_query = "insert into orders(order_index,book,customer,copy,date,status)
+SELECT 1 + coalesce((SELECT max(order_index) FROM orders WHERE customer='".$username."'), 0),
+'".$ISBN."','".$username."', ".$qty.", CURRENT_DATE(),'transferring';";
+		$mysqli->query($order_query);
+		if ($mysqli->error) {
+			echo $mysqli->error."\n";
+		} else {
+			echo "succeed\n";
+		}
+		// Update book table
+		$book_query = "update books set copies=copies-".$qty." where ISBN='".$ISBN."';";
+		$mysqli->query($book_query);
+		if ($mysqli->error) {
+			echo $mysqli->error."\n";
+		} else {
+			echo "succeed\n";
+		}
+	}
+
+	// Destory the session
+	unset($_SESSION['books']);
 
 	header('Location:'.$return_url);
 }

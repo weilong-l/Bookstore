@@ -1,0 +1,30 @@
+form {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+body {
+	margin-bottom: 20px;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.search {
+	margin: 10px 0 10px 0;
+}
+
+.title {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.search-bar {
+	margin-bottom: 10px;
+}

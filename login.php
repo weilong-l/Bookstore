@@ -1,4 +1,8 @@
-<?php include 'header.php'; ?>
+
+<?php 
+include_once 'require/config.php';
+include $header_loc; 
+?>
 
 <div class="container">
 	<div class="row col-md-6 col-md-offset-3">
@@ -24,4 +28,4 @@
 	</div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include $footer_loc; ?>
