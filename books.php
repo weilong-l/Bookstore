@@ -39,15 +39,15 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 				        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				        <h4 class="modal-title" id="myModalLabel">Advane search</h4>
 				      </div>
-				      <form action="functions/search.php" method="post" name="advance">
+				      <form action="functions/search.php" method="post" id="advance">
 				      	<div class="modal-body">
 				      		<div class="form-group">
 				      		    <label>Authors</label>
 				      		    <input type="text" name="author" class="form-control" placeholder="">
 				      		</div>
 				      		<div class="form-group">
-				      		    <label>Publishers</label>
-				      		    <input type="text" name="publishers" class="form-control" placeholder="">
+				      		    <label>Publisher</label>
+				      		    <input type="text" name="publisher" class="form-control" placeholder="">
 				      		</div>
 				      		<div class="form-group">
 				      		    <label>Title</label>
@@ -57,16 +57,16 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 				      		    <label>Subject</label>
 				      		    <input type="text" name="subject" class="form-control" placeholder="">
 				      		</div>
+							<input type="hidden" name="type" value="advance">
+							<input type="hidden" name="return_url" value="<?php echo $current_url; ?>">
 				      		<select name="sort_by" form="advance">
-							  	<option value="volvo">year</option>
-							  	<option value="saab">score</option>
+							  	<option value="year">year</option>
+							  	<option value="socre">score</option>
 							</select>
 							<select name="search_by" form="advance">
 							 	<option value="and">and</option>
 							 	<option value="or">or</option>
 							</select>
-							<input type="hidden" name="type" value="advance">
-							<input type="hidden" name="return_url" value="<?php echo $current_url; ?>">
 				      	</div>
 				      	<div class="modal-footer">
 				      	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -82,7 +82,13 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 				if (isset($_SESSION['search_title'])) {
 					$query = "select * FROM books where title like '%".$_SESSION['search_title']."%'";
 				} else if (isset($_SESSION['advance_search'])) {
-					$query = "";
+					$search = $_SESSION['advance_search'];
+					if ($search['sort_by'] == 'year') {
+						$query = "select ISBN, title, authors, publisher, year, price, subject, copies, format, keywords, avg(score) from books, feedback where books.ISBN=feedback.book and (authors like '%".$search['author']."%' ".$search['search_by']." publisher like'%".$search['publisher']."%' ".$search['search_by']." title like'%".$search['title']."%' ".$search['search_by']." subject like '%".$search['subject']."%') group by books.ISBN order by year desc;";
+						// echo $query;
+					} else {
+						$query = "select ISBN, title, authors, publisher, year, price, subject, copies, format, keywords, avg(score) from books, feedback where books.ISBN=feedback.book and (authors like '%".$search['author']."%' ".$search['search_by']." publisher like'%".$search['publisher']."%' ".$search['search_by']." title like'%".$search['title']."%' ".$search['search_by']." subject like '%".$search['subject']."%') group by books.ISBN order by avg(score);";;
+					}
 				} else {
 					$query = "select * FROM books";
 				}

@@ -11,7 +11,9 @@ if (isset($_POST['type']) && $_POST['type'] == 'search') {
 }
 
 if (isset($_POST['type']) && $_POST['type'] == 'advance') {
-	echo var_dump($_POST);
 	$_SESSION['advance_search'] = $_POST;
+	$return_url = base64_decode($_POST["return_url"]);
+
+	header('Location:'.$return_url);
 }
 ?>
