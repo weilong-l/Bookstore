@@ -26,6 +26,7 @@
 			  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 			    <li role="presentation"><a role="menuitem" tabindex="-1" href="user.php">Account info</a></li>
 			    <li role="presentation"><a role="menuitem" tabindex="-1" href="orders.php">Your orders</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="feedbacks.php">Feedbacks</a></li>
 			  </ul>
 			</li>
 			<li><a href="logout.php">Logout</a></li>

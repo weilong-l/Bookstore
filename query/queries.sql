@@ -56,8 +56,8 @@ update feedback
 set usefulness = (select avg(usefulness) from usefulness group by book,author having
 feedback.book='978-0393317558' and author='BOB1')
 where feedback.book='978-0393317558' and author='BOB1';
-select * from feedback;
-delete from feedback where author='BOB1';
+-- select * from feedback;
+-- delete from feedback where author='BOB1';
 
 
 -- Q8 (????)
