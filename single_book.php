@@ -120,9 +120,9 @@ if (isset($_GET['ISBN'])) {
 	                <form action="functions/feedback_update.php" method="post" id="rateuseful-<?php echo $obj->author;?>">
 	                    <span>Do you think this feedback useful</span>
 	                    <select name="usefulness" form="rateuseful-<?php echo $obj->author;?>">
-	                        <option value="0">useless</option>
-	                        <option value="1">useful</option>
-	                        <option value="2">very userful</option>
+	                        <option value="1">useless</option>
+	                        <option value="2">useful</option>
+	                        <option value="3">very userful</option>
 	                    </select> 
 	                    <button class="add_usefulness">Add</button>
 	                    <input type="hidden" name="reviewer" value="<?php echo $customer ?>" />

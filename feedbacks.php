@@ -49,7 +49,7 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 				echo '<ul>';
 				while ($obj = $rated_result->fetch_object()) {
 					// Query the feedback info
-					$feedback_query = "select * from feedback where author='".$_SESSION['login_user']."' and book='".$obj->book."';";
+					$feedback_query = "select * from feedback where author='".$obj->author."' and book='".$obj->book."';";
 					$feedback_result = $mysqli->query($feedback_query)->fetch_object();
 			?>
 			<div class="panel panel-default">
@@ -64,7 +64,7 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 			        </strong>
 			        <strong class="rating"><?php echo $feedback_result->score ?></strong><br>
 			        by <strong><?php echo $feedback_result->author ?></strong><br>
-			        <span>Rsefulness Rating: <?php echo $feedback_result->usefulness ?></span><br>
+			        <span>Usefulness Rating: <?php echo $feedback_result->usefulness ?></span><br>
 					<span>Date: <?php echo $feedback_result->date ?></span><br>
 					Your rating is <strong><?php echo $obj->usefulness ?></strong>
 			    </li>

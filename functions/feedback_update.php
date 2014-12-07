@@ -17,11 +17,12 @@ if(isset($_POST["type"]) && $_POST["type"]=='add')
 	$customer 	= filter_var($_POST["customer"], FILTER_SANITIZE_STRING);
 	$opinion 	= filter_var($_POST["feedback"], FILTER_SANITIZE_STRING);
 	$return_url = base64_decode($_POST["return_url"]); //return url
+	// $date =  "";
 
 	// Add new feedback
-    $query = "INSERT INTO feedback (author, opinion, book, score) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO feedback (author, opinion, book, score, date) VALUES (?, ?, ?, ?, CURRENT_DATE())";
 	$stmt = $mysqli->prepare($query);
-	$stmt->bind_param("sssi", $customer, $opinion, $book_isbn, $score);
+	$stmt->bind_param('sssi', $customer, $opinion, $book_isbn, $score);
     if ($stmt->execute() === True) {
     	header('Location:'.$return_url);
     } else {
