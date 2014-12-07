@@ -59,10 +59,12 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 				      		</div>
 							<input type="hidden" name="type" value="advance">
 							<input type="hidden" name="return_url" value="<?php echo $current_url; ?>">
+							<label>Sort by:</label>
 				      		<select name="sort_by" form="advance">
 							  	<option value="year">year</option>
 							  	<option value="socre">score</option>
 							</select>
+							<label>Search by:</label>
 							<select name="search_by" form="advance">
 							 	<option value="and">and</option>
 							 	<option value="or">or</option>
@@ -84,10 +86,10 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 				} else if (isset($_SESSION['advance_search'])) {
 					$search = $_SESSION['advance_search'];
 					if ($search['sort_by'] == 'year') {
-						$query = "select ISBN, title, authors, publisher, year, price, subject, copies, format, keywords, avg(score) from books, feedback where books.ISBN=feedback.book and (authors like '%".$search['author']."%' ".$search['search_by']." publisher like'%".$search['publisher']."%' ".$search['search_by']." title like'%".$search['title']."%' ".$search['search_by']." subject like '%".$search['subject']."%') group by books.ISBN order by year desc;";
+						$query = "select ISBN, title, authors, publisher, year, price, subject, copies, format, keywords, avg(score) from (select * from books left outer join feedback on books.ISBN=feedback.book ) search_book where(authors like '%".$search['author']."%' ".$search['search_by']." publisher like'%".$search['publisher']."%' ".$search['search_by']." title like'%".$search['title']."%' ".$search['search_by']." subject like '%".$search['subject']."%') group by ISBN order by year desc;";
 						// echo $query;
 					} else {
-						$query = "select ISBN, title, authors, publisher, year, price, subject, copies, format, keywords, avg(score) from books, feedback where books.ISBN=feedback.book and (authors like '%".$search['author']."%' ".$search['search_by']." publisher like'%".$search['publisher']."%' ".$search['search_by']." title like'%".$search['title']."%' ".$search['search_by']." subject like '%".$search['subject']."%') group by books.ISBN order by avg(score);";;
+						$query = "select ISBN, title, authors, publisher, year, price, subject, copies, format, keywords, avg(score) from (select * from books left outer join feedback on books.ISBN=feedback.book ) search_book where(authors like '%".$search['author']."%' ".$search['search_by']." publisher like'%".$search['publisher']."%' ".$search['search_by']." title like'%".$search['title']."%' ".$search['search_by']." subject like '%".$search['subject']."%') group by ISBN order by avg(score) desc;";
 					}
 				} else {
 					$query = "select * FROM books";
@@ -98,41 +100,50 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 					while ($book = $result->fetch_object()) {
 				?>
 				<div class="book">
-					<h3><?php echo $book->title; ?></h3>
-					<h4>Author: <?php echo $book->authors; ?></h4>
-					<p>Publisher: <?php echo $book->publisher; ?></p>
-					<p>Price: <?php echo $book->price; ?></p>
-					<p>Copies: <?php echo $book->copies; ?></p>
-					<p>Year: <?php echo $book->year; ?></p>
-					<p>Format: <?php echo $book->format; ?></p>
+					<h3><a href="functions/single_book.php?ISBN=<?php echo $book->ISBN; ?>"><?php echo $book->title; ?></a></h3>
+					<h4><?php echo $book->authors; ?></h4>
+					<div class="row">
+						<div class="col-md-8">
+							<p>
+								<span>Published by <?php echo $book->publisher; ?></span><br>	
+								<span>Quantity Available: <strong><?php echo $book->copies; ?></strong></span><br>
+								<span>Year: <?php echo $book->year; ?></span><br>
+								<span>Format: <?php echo $book->format; ?></span><br>
+							</p>
+							
+							<?php 
+							if ($book->subject) {
+								echo '<p>Subject: '.$book->subject.'</p>';
+							}
+							?></div>
+						<div class="col-md-4">
+							<form method="post" action="functions/cart_update.php">
+								<div class="input-group">
+									<input class="form-control" type="number" name="product_qty" min="1" max="<?php echo $book->copies; ?>">
+									<div class="input-group-btn">
+										<button class="btn btn-primary">Add to cart</button>
+									</div>
+								</div>
+								<input type="hidden" name="ISBN" value="<?php echo $book->ISBN; ?>"></p>
+								<input type="hidden" name="type" value="add">
+								<input type="hidden" name="return_url" value="<?php echo $current_url; ?>">
+							</form>
+							<p class="price"><span>Price:</span> $<?php echo $book->price; ?></p>
+						</div>
+					</div>
 					<?php 
 					if ($book->keywords) {
-						echo '<p>Keywords: '.$book->keywords.'</p>';
-					}
-		
-					if ($book->subject) {
-						echo '<p>Subject: '.$book->subject.'</p>';
+						echo '<p>Item Description: '.$book->keywords.'</p>';
 					}
 					 ?>
-					<form method="post" action="functions/cart_update.php">
-						<div class="input-group col-md-6 col-md-offset-6">
-							<input class="form-control" type="number" name="product_qty" min="1" max="<?php echo $book->copies; ?>">
-							<div class="input-group-btn">
-								<button class="btn btn-primary">Add to cart</button>
-							</div>
-						</div>
-						<input type="hidden" name="ISBN" value="<?php echo $book->ISBN; ?>"></p>
-						<input type="hidden" name="type" value="add">
-						<input type="hidden" name="return_url" value="<?php echo $current_url; ?>">
-					</form>
 				</div>
 				<?php
 					}
 				}
 				?>
 			</div>
-
-			<!-- Shopping cart -->
+			
+			<?php if (isset($_SESSION["login_user"])): ?>
 			<div class="shopping-cart col-md-5 col-md-offset-1">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -177,7 +188,9 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 						}
 						?></div>
 				</div>
-			</div>
+			</div>				
+			<?php endif ?>
+			<!-- Shopping cart -->
 		</div>
 	</div>
 </div>

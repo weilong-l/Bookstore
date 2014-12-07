@@ -9,14 +9,14 @@
 <body>
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
-			<a href="index.php" class="navbar-brand">BOOKSTORE</a>
+			<a href="index.php" class="navbar-brand">BS</a>
 		</div>
 
 		<ul class="nav navbar-nav navbar-left">
 			<li><a href="books.php">Books</a></li>
-			<?php 
-			$_SESSION['name'] = "ANNA";
-			if (isset($_SESSION['username'])) {
+			<?php
+
+			if (isset($_SESSION['login_user'])) {
 			?>
 			<!-- <li><a href="orders.php">Orders</a></li> -->
 			<li class="dropdown">
@@ -29,6 +29,7 @@
 			    <li role="presentation"><a role="menuitem" tabindex="-1" href="orders.php">Your orders</a></li>
 			  </ul>
 			</li>
+			<li><a href="logout.php">Logout</a></li>
 			<?php
 			} else {
 			?>

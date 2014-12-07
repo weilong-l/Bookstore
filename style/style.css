@@ -28,3 +28,16 @@ a:hover {
 .search-bar {
 	margin-bottom: 10px;
 }
+
+.price {
+	/*text-transform: uppercase;*/
+	font-weight: 700;
+	font-size: 18px;
+	color: #D0021B;
+}
+
+.price span {
+	font-weight: 400;
+	font-size: 16px;
+	color: black;
+}

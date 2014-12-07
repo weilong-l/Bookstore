@@ -6,8 +6,16 @@ include $header_loc;
 
 <div class="container">
 	<?php 
-	// Query orders
-	$order_query = "select * from orders where customer ='".$_SESSION["username"]."';";
+	if (!isset($_SESSION['login_user'])) {
+	?>
+	<div class="alert alert-danger" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">Error:</span>
+		Please login <a href="login">here</a>
+	</div>
+	<?php
+	} else {
+	$order_query = "select * from orders where customer ='".$_SESSION["login_user"]."';";
 	$order_result = $mysqli->query($order_query);
 
 	if ($order_result) {
@@ -29,6 +37,7 @@ include $header_loc;
 			}
 		}
 	}
+}
 	 ?>
 </div>
 

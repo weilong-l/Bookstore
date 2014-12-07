@@ -83,7 +83,7 @@ if (isset($_GET["checkout"]) && $_GET["checkout"] ==1 ) {
 		// excute database update sql
 		// Insert this into order table
 		$ISBN = $cart_itm['ISBN'];
-		$username = $_SESSION['username'];
+		$username = $_SESSION['login_user'];
 		$qty = $cart_itm['qty'];
 		$order_query = "insert into orders(order_index,book,customer,copy,date,status)
 SELECT 1 + coalesce((SELECT max(order_index) FROM orders WHERE customer='".$username."'), 0),
