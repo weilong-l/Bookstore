@@ -90,17 +90,13 @@ SELECT 1 + coalesce((SELECT max(order_index) FROM orders WHERE customer='".$user
 '".$ISBN."','".$username."', ".$qty.", CURRENT_DATE(),'transferring';";
 		$mysqli->query($order_query);
 		if ($mysqli->error) {
-			echo $mysqli->error."\n";
 		} else {
-			echo "succeed\n";
 		}
 		// Update book table
 		$book_query = "update books set copies=copies-".$qty." where ISBN='".$ISBN."';";
 		$mysqli->query($book_query);
 		if ($mysqli->error) {
-			echo $mysqli->error."\n";
 		} else {
-			echo "succeed\n";
 		}
 	}
 

@@ -100,7 +100,7 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 					while ($book = $result->fetch_object()) {
 				?>
 				<div class="book">
-					<h3><a href="functions/single_book.php?ISBN=<?php echo $book->ISBN; ?>"><?php echo $book->title; ?></a></h3>
+					<h3><a href="single_book.php?ISBN=<?php echo $book->ISBN; ?>"><?php echo $book->title; ?></a></h3>
 					<h4><?php echo $book->authors; ?></h4>
 					<div class="row">
 						<div class="col-md-8">

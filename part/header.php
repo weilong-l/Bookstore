@@ -13,12 +13,11 @@
 		</div>
 
 		<ul class="nav navbar-nav navbar-left">
-			<li><a href="books.php">Books</a></li>
 			<?php
 
 			if (isset($_SESSION['login_user'])) {
 			?>
-			<!-- <li><a href="orders.php">Orders</a></li> -->
+			<li><a href="books.php">Books</a></li>
 			<li class="dropdown">
 			  <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 			    <?php echo $_SESSION['name']; ?>
