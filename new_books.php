@@ -7,6 +7,8 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 ?>
 
 <div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
 <?php 
 	if (isset($_POST['addbook'])) {
 		// Creating variables from input data
@@ -38,36 +40,53 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 		ADD NEW BOOKS
 	</h1>
 	
-	Details
-	
 	<form action="new_books.php" method="POST">
-	
-	ISBN: <br>
-	<input type="text" name="ISBN"> <br>
-	Title: <br>
-	<input type="text" name="title"> <br>
-	Authors: <br>
-	<input type="text" name="authors"> <br>
-	Publisher: <br>
-	<input type="text" name="publisher"> <br>
-	Year of Publication: <br>
-	<input type="text" name="year"> <br>
-	Number of copies: <br>
-	<input type="text" name="copies"> <br>
-	Price: <br>
-	<input type="text" name="price"> <br>
-	Format: <br>
-	<select name="format">
-		<option value="hardcover">Hardcover</option>
-		<option value="softcover">Softcover</option>
-	</select> <br>
-	Keywords: <br>
-	<input type="text" name="keywords"> <br>
-	Subject: <br>
-	<input type="text" name="subject"> <br>
-	
-	<input type="submit" name="addbook" value="Add">
-	
+
+		<div class="form-group">
+		    <label>ISBN</label>
+		    <input type="text" name="ISBN" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Title</label>
+		    <input type="text" name="title" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Authors</label>
+		    <input type="text" name="authors" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Publisher</label>
+		    <input type="text" name="publisher" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Year of Publication</label>
+		    <input type="text" name="year" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Number of copies</label>
+		    <input type="text" name="copies" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Price</label>
+		    <input type="text" name="price" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Keywords</label>
+		    <input type="text" name="keywords" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Subject</label>
+		    <input type="text" name="subject" class="form-control" placeholder="">
+		</div>
+		<div class="form-group">
+		    <label>Increase in copies:</label>
+			<select name="format">
+				<option value="hardcover">Hardcover</option>
+				<option value="softcover">Softcover</option>
+			</select> <br>
+		</div>
+
+		<input class="btn btn-primary" type="submit" name="addbook" value="Add">
 	</form> 
 </div>
 <?php include $footer_loc; ?>

@@ -1,4 +1,3 @@
-
 <?php 
 include_once 'require/config.php';
 include $header_loc;

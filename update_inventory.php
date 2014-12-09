@@ -7,6 +7,8 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 ?>
 
 <div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
 	<?php 
 	// Creating variables from input data
 	if (isset($_POST["updateinv"])) {
@@ -31,15 +33,19 @@ $current_url = base64_encode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQU
 	</h2>
 	<!--- (5) ARRIVAL OF MORE COPIES  -->
 	<form action="update_inventory.php" method="POST">
-	
-	ISBN: <br>
-	<input type="text" name="ISBN"> <br>
-	Increase in copies: <br>
-	<input type="number" name="Increase_in_copy"> <br>
-	
-	<input type="submit" name="updateinv" value="Update Inventory">
-	
+		<div class="form-group">
+		    <label>ISBN:</label>
+		    <input type="text" name="ISBN" class="form-control" placeholder="">
+		</div>
+
+		<div class="form-group">
+		    <label>Increase in copies:</label>
+		    <input type="text" name="Increase_in_copy" class="form-control" placeholder="">
+		</div>
+		<input class="btn btn-primary" type="submit" name="updateinv" value="Update Inventory">
 	</form>
+</div>
+	</div>
 </div>
 
 <?php include $footer_loc; ?>
