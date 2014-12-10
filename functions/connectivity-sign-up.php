@@ -24,8 +24,13 @@ if(isset($_POST['submit']))
 		    {
 		    	$error = "YOUR REGISTRATION IS COMPLETED...";
 		    	$_SESSION['login_user']=$userName; // Initializing Session
+		    	$_SESSION['user_type']='normal';
 		    	$_SESSION['name'] = $fullname;
 				header("location: ../user.php"); // Redirecting To Other Page
+		    }
+		    else {
+		    	$error = "SORRY...YOU ARE ALREADY REGISTERED USER..."; 
+		    	header("location: ../register.php?error=".$error."");
 		    }
 		} 
 		else 
